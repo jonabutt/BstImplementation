@@ -400,32 +400,44 @@ namespace BST_Implementation
         //Recuresive method for GetSuccessor
         private BstNode<T> GetSuccessor(BstNode<T> root, T data)
         {
+            //Get the node for the data
             BstNode<T> currentNode = FindNode(root, data);
+            //Check if there is any node with that data
             if (currentNode == null) return null;
-            //Case 1: Node has right subtree
+            //Node has right subtree, therefore get the the lowest value of the right subtree
             if (currentNode.right != null)
             {
+                //Temp variable for the right subtree
                 BstNode<T> tempNode = currentNode.right;
+                //Traverse the tree to get the lowest value
                 while (tempNode.left != null)
                 {
                     tempNode = tempNode.left;
                 }
                 return tempNode;
             }
+            //There will be no right subtree 
             else
             {
+                //Temp node used to store successor and ancestor while traversing to the node
                 BstNode<T> successorNode = null;
                 BstNode<T> ancestorNode = root;
+                //Traversing to the node to get the successor
                 while (ancestorNode != currentNode)
                 {
+                    //Traverse to the left when currentNode < ancestorNode 
                     if (currentNode.data.CompareTo(ancestorNode.data) <= -1)
                     {
+                        //Set the successor node to ancestor node becuase if we go to left the parent node is higher than the next one
                         successorNode = ancestorNode;
+                        //ancestor node to left tree to tranverse to the left
                         ancestorNode = ancestorNode.left;
                     }
+                    //Traverse to the right subtree
                     else
                     {
                         //there is no need to put successorNode = ancestoreNode becuase your are traversing to the right and the parent node will be smaller the current
+                        //The parent node will be lower value of the next node so there is no successor node for the next node
                         ancestorNode = ancestorNode.right;
                     }
                 }
